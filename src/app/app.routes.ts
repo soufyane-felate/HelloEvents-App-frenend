@@ -6,6 +6,8 @@ import { LogOutComponent } from './pages/log-out/log-out.component';
 import { ReservationComponent } from './pages/reservation/reservation.component';
 import { EventComponent } from './pages/event/event.component';
 import { ClientComponent } from './pages/client/client.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -16,4 +18,14 @@ export const routes: Routes = [
   { path: 'reservation', component: ReservationComponent },
   { path: 'event', component: EventComponent },
   { path: 'client', component: ClientComponent },
+  { 
+    path: 'register', 
+    component: RegisterComponent,
+    data: { animation: 'registerPage' } 
+  },
+  { 
+    path: 'login', 
+    component: LoginComponent,
+    data: { animation: 'loginPage' } 
+  },
 ];

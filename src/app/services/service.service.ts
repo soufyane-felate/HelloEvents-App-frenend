@@ -9,6 +9,7 @@ export class ServiceService {
   private clientUrl = 'http://localhost:8080/api/client';
   private eventUrl = 'http://localhost:8080/api/event';
   private reservationUrl = 'http://localhost:8080/api/reservation';
+  private registerUrl = 'http://localhost:8080/api/auth/signup';
 
   constructor(private http: HttpClient) {}
 
@@ -34,8 +35,12 @@ export class ServiceService {
   getEventById(id: string): Observable<any> {
     return this.http.get<any>(`${this.eventUrl}/${id}`);
   }
-
-  //for reservation
-
+  
+  //for register
+ 
+  registerCreate(postData: any): Observable<any> {
+    return this.http.get<any[]>(this.registerUrl);
+  }
+ 
   
 }

@@ -1,0 +1,80 @@
+<div class="book-container" [@pageFlip]="isLeaving ? 'out' : 'in'">
+    <div class="book-page">
+      <div class="register-card">
+        <div class="header">
+          <h1>Create Account</h1>
+          <p>Join us today and start your journey</p>
+        </div>
+  
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <div class="input-wrapper" [@inputFocus]="inputStates['name']">
+              <input 
+                id="name" 
+                type="text" 
+                formControlName="name" 
+                placeholder="Enter your name"
+                (focus)="setInputState('name', 'focused')"
+                (blur)="setInputState('name', 'default')">
+              <i class="fas fa-user"></i>
+            </div>
+            <div *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.errors" class="error-message">
+              <span *ngIf="registerForm.get('name')?.errors?.['required']">Name is required</span>
+              <span *ngIf="registerForm.get('name')?.errors?.['minlength']">Name must be at least 3 characters</span>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="email">Email</label>
+            <div class="input-wrapper" [@inputFocus]="inputStates['email']">
+              <input 
+                id="email" 
+                type="email" 
+                formControlName="email" 
+                placeholder="Enter your email"
+                (focus)="setInputState('email', 'focused')"
+                (blur)="setInputState('email', 'default')">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.errors" class="error-message">
+              <span *ngIf="registerForm.get('email')?.errors?.['required']">Email is required</span>
+              <span *ngIf="registerForm.get('email')?.errors?.['email']">Please enter a valid email</span>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-wrapper" [@inputFocus]="inputStates['password']">
+              <input 
+                id="password" 
+                [type]="passwordVisible ? 'text' : 'password'" 
+                formControlName="password" 
+                placeholder="Enter your password"
+                (focus)="setInputState('password', 'focused')"
+                (blur)="setInputState('password', 'default')">
+              <i class="fas fa-lock"></i>
+              <i 
+                class="fas password-toggle" 
+                [class.fa-eye]="!passwordVisible" 
+                [class.fa-eye-slash]="passwordVisible" 
+                (click)="togglePasswordVisibility()"></i>
+            </div>
+            <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.errors" class="error-message">
+              <span *ngIf="registerForm.get('password')?.errors?.['required']">Password is required</span>
+              <span *ngIf="registerForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters</span>
+            </div>
+          </div>
+  
+          <button type="submit" class="submit-btn" [disabled]="registerForm.invalid">
+            <span>Register</span>
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </form>
+  
+        <div class="footer">
+          <p>Already have an account? <a (click)="navigateToLogin()">Sign in</a></p>
+        </div>
+      </div>
+    </div>
+  </div>

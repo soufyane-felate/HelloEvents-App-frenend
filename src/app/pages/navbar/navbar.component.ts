@@ -14,5 +14,7 @@ export class NavbarComponent {
     { label: 'reservation', link: 'reservation' },
     { label: 'client', link: 'client' },
     { label: 'event', link: 'event' },
+ 
   ];
+ 
 }

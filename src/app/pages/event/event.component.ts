@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { Component } from '@angular/core';
 
 import { FormControl, FormsModule, NgForm, NgModel } from '@angular/forms';
@@ -8,9 +8,8 @@ import { ServiceService } from '../../services/service.service';
 @Component({
   selector: 'app-event',
   standalone: true,
-  imports: [
-    CommonModule,RouterLink,FormsModule
-  ],
+  imports: [CommonModule,RouterLink, FormsModule,NgFor],
+
   templateUrl: './event.component.html',
   styleUrl: './event.component.css',
 })
