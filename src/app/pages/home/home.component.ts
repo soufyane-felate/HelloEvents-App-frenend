@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatButton } from '@angular/material/button';
+import { trigger, style, animate, transition } from '@angular/animations';
+
 import {
   MatCard,
   MatCardContent,
@@ -34,6 +36,14 @@ interface Event {
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(20px)' }),
+        animate('800ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+      ])
+    ])
+  ]
 })
 export class HomeComponent implements OnInit {
   ngOnInit(): void {

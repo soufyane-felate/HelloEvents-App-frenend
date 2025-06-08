@@ -1,29 +1,7 @@
-<mat-toolbar color="primary">
-
-  <button mat-button>Sign-up</button>
-
-
-
-
-
-
-</mat-toolbar>
-
-
-<body>
-  <mat-card class="example-card" appearance="outlined" *ngFor=" let a of ArrayEvents">
-    <mat-card-header>
-      <mat-card-title>{{a.name}}</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p>ce soir j'oublie tout </p>
-    </mat-card-content>
-    <mat-card-footer class="example-card-footer">
-      <mat-chip-set aria-label="Chihuahua traits">
-        <mat-chip>charming</mat-chip>
-        <mat-chip>graceful</mat-chip>
-        <mat-chip>sassy</mat-chip>
-      </mat-chip-set>
-    </mat-card-footer>
-  </mat-card>
-</body>
+<div class="hero-container d-flex flex-column justify-content-center align-items-center text-center" [@fadeIn]>
+  <h1 class="display-4 fw-bold text-white">Welcome to Hello Event</h1>
+  <p class="lead text-light mt-3 mb-4">Discover, book, and enjoy amazing events near you.</p>
+  <a routerLink="/events" class="btn btn-primary btn-lg shadow animate__animated animate__pulse animate__infinite">
+    Join Events Now
+  </a>
+</div>

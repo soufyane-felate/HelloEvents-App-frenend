@@ -4,6 +4,10 @@ import { Router, RouterModule } from '@angular/router';
 import { trigger, transition, style, animate, state } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { emit } from 'node:process';
+import { AuthService } from '../../services/auth/auth.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
 
 @Component({
   selector: 'app-register',
@@ -29,7 +33,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ])
   ]
 })
-export class RegisterComponent {
+export class RegisterComponent  {
   registerForm: FormGroup;
   passwordVisible = false;
   inputStates: { [key: string]: string } = {
@@ -39,7 +43,11 @@ export class RegisterComponent {
   };
   isLeaving = false;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder,
+     private router: Router,
+     private authSevice:AuthService,
+     private message:NzMessageService
+    ) {
     this.registerForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
@@ -50,7 +58,6 @@ export class RegisterComponent {
   onSubmit() {
     if (this.registerForm.valid) {
       console.log('Form submitted:', this.registerForm.value);
-      // Add your registration logic here
     } else {
       this.registerForm.markAllAsTouched();
     }
@@ -69,5 +76,26 @@ export class RegisterComponent {
     setTimeout(() => {
       this.router.navigate(['/login']);
     }, 500);
+  }
+
+
+
+  ngOnInit(){
+    this.registerForm=this.fb.group({
+      email:[null,[Validators.email,Validators.required]],
+      name:[null,Validators.required],
+      password:[null,Validators.required]
+    })
+  }
+  submitForm(){
+    this.authSevice.register(this.registerForm.value).subscribe(res=>{
+      if(res.id!=null){
+        this.message.success("Signup successful",{nzDuration:5000});
+        this.router.navigateByUrl("/");
+      }else{
+        this.message.error(`${res.message}`,{nzDuration:5000})
+      }
+    })
+
   }
 }
