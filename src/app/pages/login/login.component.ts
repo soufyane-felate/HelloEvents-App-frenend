@@ -3,6 +3,10 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { Router, RouterModule } from '@angular/router';
 import { trigger, transition, style, animate, state } from '@angular/animations';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth/auth.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { error } from 'console';
+import { UserStorageService } from '../../services/storage/user-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -37,21 +41,49 @@ export class LoginComponent {
   };
   isLeaving = false;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder,
+    private authService:AuthService,
+    private message:NzMessageService, 
+    private router: Router) 
+    {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
 
-  onSubmit() {
-    if (this.loginForm.valid) {
-      console.log('Form submitted:', this.loginForm.value);
-      // Add your login logic here
-    } else {
-      this.loginForm.markAllAsTouched();
-    }
+
+  ngOnInit(){
+    this.loginForm=this.fb.group({
+
+      email:[null, [Validators.required,Validators.email]],
+      password:[null,[Validators.required]]
+    })
+
   }
+submitForm() {
+  this.authService.login(this.loginForm.value).subscribe(res=>{
+    console.log(res);
+     if(res.userId!=null){
+      const user={
+        id:res.userId,
+        role:res.serRole
+      }
+      UserStorageService.saveUser(user);
+      UserStorageService.saveToken(res.jwt);
+     }
+
+  },
+error=>{
+  this.message.error(
+    `Bad credentials`,
+    {nzDuration:5000}
+  )
+}
+)
+   
+  }
+ 
 
   togglePasswordVisibility() {
     this.passwordVisible = !this.passwordVisible;

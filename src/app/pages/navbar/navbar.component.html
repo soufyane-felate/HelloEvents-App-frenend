@@ -1,27 +1,45 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand custom-brand" href="#">FlavorShare</a>
+    <a class="navbar-brand custom-brand" href="#">HelloEvent</a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-      <ul class="navbar-nav d-flex flex-lg-row gap-lg-3 text-center">
+      <ul class="navbar-nav d-flex flex-lg-row gap-lg-3 text-center" *ngIf="!isAdminLoggedIn && !isCustomerLoggedIn">
         <li *ngFor="let item of navItems" class="nav-item">
-          <a class="nav-link text-light" [href]="item.link">
+          <a class="nav-link text-light" [routerLink]="item.link">
+            {{ item.label }}
+          </a>
+        </li>
+      </ul>
+       
+
+      <ul class="navbar-nav d-flex flex-lg-row gap-lg-3 text-center" *ngIf="isAdminLoggedIn">
+        <li *ngFor="let item of adminNavItems" class="nav-item">
+          <a class="nav-link text-light" [routerLink]="item.link">
+            {{ item.label }}
+          </a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav d-flex flex-lg-row gap-lg-3 text-center" *ngIf="isCustomerLoggedIn">
+        <li *ngFor="let item of customerNavItems" class="nav-item">
+          <a class="nav-link text-light" [routerLink]="item.link">
             {{ item.label }}
           </a>
         </li>
       </ul>
     </div>
-    
 
-    <a class="navbar-brand d-none d-lg-block" href="login" >
-      login
-    </a>
-    <a class="navbar-brand d-none d-lg-block" href="register">
-      register
-    </a>
+    <div *ngIf="!isAdminLoggedIn && !isCustomerLoggedIn">
+      <a class="btn btn-outline-light me-2 d-none d-lg-inline-block" routerLink="/login">Login</a>
+      <a class="btn btn-primary d-none d-lg-inline-block" routerLink="/register">Register</a>
+    </div>
+
+    <div *ngIf="isAdminLoggedIn || isCustomerLoggedIn">
+      <button class="btn btn-danger" (click)="logout()">Logout</button>
+    </div>
   </div>
 </nav>

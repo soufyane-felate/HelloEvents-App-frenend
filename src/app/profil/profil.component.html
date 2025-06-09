@@ -1,0 +1,24 @@
+<div class="container">
+    <h1>Profile</h1>
+    <div *ngIf="!isEditing; else editProfile">
+      <p><strong>Name:</strong> {{ user?.name }}</p>
+      <p><strong>Email:</strong> {{ user?.email }}</p>
+      <p><strong>Role:</strong> {{ user?.role }}</p>
+      <button (click)="toggleEdit()">Edit Profile</button>
+      <button (click)="logout()">Logout</button>
+    </div>
+    <ng-template #editProfile>
+      <form (submit)="saveProfile()">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" [(ngModel)]="user.name" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" [(ngModel)]="user.email" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <button type="button" (click)="cancelEdit()" class="btn btn-secondary">Cancel</button>
+      </form>
+    </ng-template>
+  </div>

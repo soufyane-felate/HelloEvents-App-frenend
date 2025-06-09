@@ -6,7 +6,7 @@
         <p>Sign in to continue your journey</p>
       </div>
 
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <form [formGroup]="loginForm" (ngSubmit)="submitForm()" class="login-form">
         <div class="form-group">
           <label for="email">Email</label>
           <div class="input-wrapper" [@inputFocus]="inputStates['email']">
